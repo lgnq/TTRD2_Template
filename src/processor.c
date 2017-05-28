@@ -197,7 +197,7 @@ void PROCESSOR_Configure_Reqd_MoSt(void)
             tasks_init();
 
             // Feed the watchdog
-            ///WATCHDOG_Update();
+            WATCHDOG_Update();
 
             break;
         }
