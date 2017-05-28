@@ -1,15 +1,15 @@
 /*----------------------------------------------------------------------------*-
 
-   main.h (Release 2017-02-22a)
+   ttrd2-02a-t0401a-v001a_iwdt_task.h (Release 2017-02-22a)
 
   ----------------------------------------------------------------------------
    
-   This is the Processor Header file.
+   - See ttrd2-02a-t0401a-v001a_iwdt_task.c for details.
 
 -*----------------------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*-
 
-  This code is copyright (c) 2014-2017 SafeTTy Systems Ltd.
+  This code is copyright (c) 2014-2016 SafeTTy Systems Ltd.
 
   This code forms part of a Time-Triggered Reference Design (TTRD) that is 
   documented in the following book: 
@@ -33,25 +33,28 @@
   Please contact SafeTTy Systems Ltd if you require clarification of these 
   licensing arrangements: http://www.safetty.net/contact
 
-   CorrelaTTor, DuplicaTTor, MoniTTor, PredicTTor, ReliabiliTTy, SafeTTy, 
-   SafeTTy Systems and WarranTTor are registered trademarks or trademarks 
-   of SafeTTy Systems Ltd in the UK and other countries.
+  CorrelaTTor, DecomposiTTor, DuplicaTTor, MoniTTor, PredicTTor, ReliabiliTTy,  
+  SafeTTy, SafeTTy Systems, TriplicaTTor and WarranTTor are registered 
+  trademarks or trademarks of SafeTTy Systems Ltd in the UK & other countries.
 
 -*----------------------------------------------------------------------------*/
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __WATCHDOG_TASK_H__
+#define __WATCHDOG_TASK_H__
 
-#include "user.h"
+// Processor Header
+#include "main.h"
 
-// Processor module
-#include "processor.h"
+// Links to target libraries
 
-// Scheduler module
-#include "scheduler.h"
+// ------ Public function prototypes -----------------------------------------
 
-// task
-#include "watchdog_task.h"
-#include "heartbeat_task.h"
+void WATCHDOG_Init(const uint32_t);
+void WATCHDOG_Update(void);
 
 #endif
+
+/*----------------------------------------------------------------------------*-
+   ------------------------------ END OF FILE ---------------------------------
+-*----------------------------------------------------------------------------*/
+

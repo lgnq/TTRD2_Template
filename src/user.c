@@ -57,7 +57,7 @@ void tasks_init(void)
     // Timeout is WDT count value: approx 32 per millisecond
     // => a count of 64 gives a timeout of approx 2 ms
     // NOTE: WDT driven by RC oscillator - timing varies with temperature 
-    ///WATCHDOG_Init(60);
+    WATCHDOG_Init(60);
 
     // Prepare for switch task
     ///SWITCH_BUTTON1_Init();
@@ -77,8 +77,8 @@ void tasks_init(void)
     // B. Initial delay / offset (in Ticks)
     // C. Task period (in Ticks): Must be > 0
     //           A                       B  C
-    ///SCH_Add_Task(WATCHDOG_Update, 0, 1);    // Feed iWDT
+    SCH_Add_Task(WATCHDOG_Update, 0, 1);            // Feed iWDT
     ///SCH_Add_Task(SWITCH_BUTTON1_Update,  0, 1);    // Switch interface 
-    SCH_Add_Task(HEARTBEAT_SW_U_Update2, 0, 1000); // Heartbeat LED
+    SCH_Add_Task(HEARTBEAT_SW_U_Update2, 0, 1000);  // Heartbeat LED
     ///SCH_Add_Task(UART2_BUF_O_Update,     0, 1);    // UART-USB reports    
 }
