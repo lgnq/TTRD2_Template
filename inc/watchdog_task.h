@@ -52,6 +52,8 @@
 void WATCHDOG_Init(const uint32_t);
 void WATCHDOG_Update(void);
 
+uint8_t reset_by_watchdog(void);
+
 #endif
 
 /*----------------------------------------------------------------------------*-

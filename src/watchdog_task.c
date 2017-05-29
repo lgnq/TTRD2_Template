@@ -142,7 +142,24 @@ void WATCHDOG_Init(const uint32_t WDT_COUNT)
 void WATCHDOG_Update(void)
 {
    // Feed the watchdog (reload IWDG counter)
-   IWDG->KR = 0xAAAA;
+}
+
+uint8_t reset_by_watchdog(void)
+{
+    /*
+    if (reset_by_watchdog)
+    {
+        clear the flag
+
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+    */
+  
+    return 0;  
 }
 
 /*----------------------------------------------------------------------------*-
