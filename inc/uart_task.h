@@ -1,10 +1,10 @@
 /*----------------------------------------------------------------------------*-
 
-   main.h (Release 2017-02-22a)
+  ttrd2-03a-t0401a-v001a_uart2_buff_o_task.h (Release 2017-02-22a)
 
   ----------------------------------------------------------------------------
-   
-   This is the Processor Header file.
+
+  See ttrd2-03a-t0401a-v001a_uart2_buff_o_task.c for details.
 
 -*----------------------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*-
@@ -33,26 +33,34 @@
   Please contact SafeTTy Systems Ltd if you require clarification of these 
   licensing arrangements: http://www.safetty.net/contact
 
-   CorrelaTTor, DuplicaTTor, MoniTTor, PredicTTor, ReliabiliTTy, SafeTTy, 
-   SafeTTy Systems and WarranTTor are registered trademarks or trademarks 
-   of SafeTTy Systems Ltd in the UK and other countries.
+  CorrelaTTor, DecomposiTTor, DuplicaTTor, MoniTTor, PredicTTor, ReliabiliTTy,  
+  SafeTTy, SafeTTy Systems, TriplicaTTor and WarranTTor are registered 
+  trademarks or trademarks of SafeTTy Systems Ltd in the UK & other countries.
 
 -*----------------------------------------------------------------------------*/
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __UART_TASK_H__
+#define __UART_TASK_H__
 
-#include "user.h"
+// Processor Header
+#include "main.h"
 
-// Processor module
-#include "processor.h"
+// ------ Public function prototypes -----------------------------------------
 
-// Scheduler module
-#include "scheduler.h"
+void UART2_BUF_O_Init(uint32_t BAUD_RATE);
+void UART2_BUF_O_Update(void);
 
-// task
-#include "uart_task.h"
-#include "watchdog_task.h"
-#include "heartbeat_task.h"
+void UART2_BUF_O_Send_All_Data(void);
+
+void UART2_BUF_O_Write_String_To_Buffer(const char* const);
+void UART2_BUF_O_Write_Char_To_Buffer(const char);
+
+void UART2_BUF_O_Write_Number10_To_Buffer(const uint32_t DATA);
+void UART2_BUF_O_Write_Number03_To_Buffer(const uint32_t DATA);
+void UART2_BUF_O_Write_Number02_To_Buffer(const uint32_t DATA);
 
 #endif
+
+/*----------------------------------------------------------------------------*-
+   ------------------------------ END OF FILE ---------------------------------
+-*----------------------------------------------------------------------------*/

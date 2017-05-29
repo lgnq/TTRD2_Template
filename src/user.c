@@ -66,10 +66,10 @@ void tasks_init(void)
     HEARTBEAT_SW_U_Init();
 
     // Prepare for UART1 task (set baud rate)
-    ///UART2_BUF_O_Init(230400);
+    UART2_BUF_O_Init(230400);
 
     // Report mode (via buffer)          
-    ///UART2_BUF_O_Write_String_To_Buffer("\nNormal mode\n");  
+    UART2_BUF_O_Write_String_To_Buffer("\nNormal mode\n");  
 
     // Add tasks to schedule.
     // Parameters are:
@@ -80,5 +80,5 @@ void tasks_init(void)
     SCH_Add_Task(WATCHDOG_Update, 0, 1);            // Feed iWDT
     ///SCH_Add_Task(SWITCH_BUTTON1_Update,  0, 1);    // Switch interface 
     SCH_Add_Task(HEARTBEAT_SW_U_Update2, 0, 1000);  // Heartbeat LED
-    ///SCH_Add_Task(UART2_BUF_O_Update,     0, 1);    // UART-USB reports    
+    SCH_Add_Task(UART2_BUF_O_Update,     0, 1);     // UART-USB reports    
 }
