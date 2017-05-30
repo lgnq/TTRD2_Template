@@ -1,12 +1,10 @@
 /*----------------------------------------------------------------------------*-
 
-  ttrd2-03a-t0401a-v001a_heartbeat_sw_u_task.c (Release 2017-02-22a)
+  ttrd2-02a-t0401a-v001a_switch_task.c (Release 2017-02-22a)
 
   ----------------------------------------------------------------------------
    
-  Simple 'Heartbeat-switch-uart' Task Module for STM32F401RC.
-
-  Targets Nucleo F401RC board.
+  Simple switch interface library for Nucleo F401 board.
 
 -*----------------------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*-
@@ -41,28 +39,38 @@
 
 -*----------------------------------------------------------------------------*/
 
+// Processor Header
 #include "main.h"
 
-// Requires switch (Button 1) interface
-//#include "ttrd2-02a-t0401a-v001a_switch_task.h"
+// ------ Private constants --------------------------------------------------
 
-// Requires UART interface
-//#include "ttrd2-03a-t0401a-v001a_uart2_buff_o_task.h"
+// Allows NO or NC switch to be used (or other wiring variations)
+#define SW_PRESSED (0)
+
+// SW_THRES must be > 1 for correct debounce behaviour
+#define SW_THRES (3)
+
+// ------ Private variable definitions ----------------------------------------
+
+// The current switch state (see Init function)
+static uint32_t Switch_button1_pressed_g = BUTTON1_NOT_PRESSED;
 
 /*----------------------------------------------------------------------------*-
 
-  HEARTBEAT_SW_U_Init()
+  SWITCH_BUTTON1_Init()
 
-  Prepare for HEARTBEAT_SW_Update() function - see below.
-  
+  Initialisation function for simple switch-interface module.
+
+  Works with Button 1 on Nucleo board.
+
   PARAMETERS:
      None.
 
   LONG-TERM DATA:
      None.
-
+   
   MCU HARDWARE:
-     GPIO pin (Heartbeat pin).
+     GPIO pin (Switch pin)
 
   PRE-CONDITION CHECKS:
      None.
@@ -77,32 +85,28 @@
      None.
 
 -*----------------------------------------------------------------------------*/
-void HEARTBEAT_SW_U_Init(void)
+void SWITCH_BUTTON1_Init(void)
 {
+    //todo : init the pins of key
 
+    // Set the initial state  
+    Switch_button1_pressed_g = BUTTON1_NOT_PRESSED;
 }
 
 /*----------------------------------------------------------------------------*-
 
-  HEARTBEAT_SW_U_Update1()
+  SWITCH_BUTTON1_Update()
 
-  Changes LED state.
-
-  For 'standard' heartbeat, must release once per second (soft deadline).
-
-  For demo purposes, this version incorporates a switch interface 
-  plus some basic fault injection capabilities.
+  Switch-reading task. 
    
   PARAMETERS:
      None.
 
   LONG-TERM DATA:
-     Heartbeat_state_s (W)
-     Countdown_s (W)
-
+     Duration_s (W)
+   
   MCU HARDWARE:
-     GPIO pin (Heartbeat pin).
-     UART2.
+     GPIO pin (Switch pin)
 
   PRE-CONDITION CHECKS:
      None.
@@ -121,68 +125,58 @@ void HEARTBEAT_SW_U_Init(void)
 
   RETURN VALUE:
      None.
- 
+
 -*----------------------------------------------------------------------------*/
-void HEARTBEAT_SW_U_Update1(void)
+void SWITCH_BUTTON1_Update(void)
 {
-    static uint32_t Heartbeat_state_s = 0;
-    static uint32_t Countdown_s = 10;
+    // Duration of switch press
+    static uint32_t Duration_s = 0;
 
-    UART2_BUF_O_Write_String_To_Buffer("\nCountdown : ");  
-    UART2_BUF_O_Write_Number03_To_Buffer(Countdown_s);  
-    UART2_BUF_O_Write_String_To_Buffer("\n");  
-
-    if (Countdown_s-- == 0)
+    uint32_t Button1_input = 1;
+        
+    // Read the pin state
+    ///Button1_input = GPIO_ReadInputDataBit(BUTTON1_PORT, BUTTON1_PIN);
+   
+    if (Button1_input == SW_PRESSED)
     {
-        // Trigger task overrun (for demo purposes) ...
-        while (1)
-            ;
-    }
+        Duration_s += 1;
 
-    // Only flash the LED if the switch is *not* pressed    
-    if (SWITCH_BUTTON1_Get_State() == BUTTON1_NOT_PRESSED)
-    {
-        // Change the LED from OFF to ON (or vice versa)
-        if (Heartbeat_state_s == 1)
+        if (Duration_s > SW_THRES)
         {
-            Heartbeat_state_s = 0;
-            //todo : turn LED on
+            Duration_s = SW_THRES;
 
-            UART2_BUF_O_Write_String_To_Buffer("LED On ...\n");  
+            Switch_button1_pressed_g = BUTTON1_PRESSED;
         }
         else
         {
-            Heartbeat_state_s = 1;
-            //todo : turn LED off
-
-            UART2_BUF_O_Write_String_To_Buffer("LED Off ...\n");  
+            // Switch pressed, but not yet for long enough
+            Switch_button1_pressed_g = BUTTON1_NOT_PRESSED;
         }
     }
     else
     {
-        UART2_BUF_O_Write_String_To_Buffer("SWITCH PRESSED ...\n");  
-        Countdown_s = 10;
+        // Switch not pressed - reset the count
+        Duration_s = 0;
+
+        // Update status
+        Switch_button1_pressed_g = BUTTON1_NOT_PRESSED;
     }
 }
 
 /*----------------------------------------------------------------------------*-
 
-  HEARTBEAT_SW_U_Update2()
+  SWITCH_BUTTON1_Get_State()
 
-  Changes LED state.
-
-  For 'standard' heartbeat, must release once per second (soft deadline).
-
-  Basic 'heartbeat' code: shares pin with 'Update1';
+  Reurns switch state.
    
   PARAMETERS:
      None.
 
   LONG-TERM DATA:
-     Heartbeat_state_s (W)
-
+     None.
+   
   MCU HARDWARE:
-     GPIO pin (Heartbeat pin).
+     None.
 
   PRE-CONDITION CHECKS:
      None.
@@ -200,26 +194,12 @@ void HEARTBEAT_SW_U_Update1(void)
      Not yet determined.
 
   RETURN VALUE:
-     None.
- 
+     Returns BUTTON1_PRESSED or BUTTON1_NOT_PRESSED.
+
 -*----------------------------------------------------------------------------*/
-void HEARTBEAT_SW_U_Update2(void)
+uint32_t SWITCH_BUTTON1_Get_State(void)
 {
-    static uint32_t Heartbeat_state_s = 0;
-
-    // Change the LED from OFF to ON (or vice versa)
-    if (Heartbeat_state_s == 1)
-    {
-        Heartbeat_state_s = 0;
-
-        //todo : turn LED on
-    }
-    else
-    {
-        Heartbeat_state_s = 1;
-
-        //todo : turn LED off
-    }
+    return Switch_button1_pressed_g;
 }
 
 /*----------------------------------------------------------------------------*-

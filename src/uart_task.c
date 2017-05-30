@@ -93,45 +93,7 @@ void UART2_BUF_O_Send_Char(const char);
 -*----------------------------------------------------------------------------*/
 void UART2_BUF_O_Init(uint32_t BAUD_RATE)
 {
-#if 0  
-   GPIO_InitTypeDef GPIO_InitStructure;
-   USART_InitTypeDef USART_InitStructure;
-
-   // USART2 clock enable 
-   RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
-
-   // GPIOA clock enable 
-   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-
-   // GPIO config
-   GPIO_InitStructure.GPIO_Pin   = UART2_TX_PIN; 
-   GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
-   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-   GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
-   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-   GPIO_Init(UART2_PORT, &GPIO_InitStructure);
-
-   GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
-
-   // USART2 configuration
-   // - BaudRate as specified in function parameter
-   // - Word Length = 8 Bits
-   // - One Stop Bit
-   // - No parity
-   // - Hardware flow control disabled (RTS and CTS signals)
-   // - Tx (only) enabled
-   USART_InitStructure.USART_BaudRate = BAUD_RATE;
-   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-   USART_InitStructure.USART_StopBits = USART_StopBits_1;
-   USART_InitStructure.USART_Parity = USART_Parity_No;
-   USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-   USART_InitStructure.USART_Mode = USART_Mode_Tx;
-   USART_Init(USART2, &USART_InitStructure);
-
-   // Enable UART2
-   USART_Cmd(USART2, ENABLE);
-#else
-#endif   
+    //todo : init the uart  
 }
 
 /*----------------------------------------------------------------------------*-
