@@ -79,6 +79,6 @@ void tasks_init(void)
     //           A                       B  C
     SCH_Add_Task(WATCHDOG_Update, 0, 1);            // Feed iWDT
     ///SCH_Add_Task(SWITCH_BUTTON1_Update,  0, 1);    // Switch interface 
-    SCH_Add_Task(HEARTBEAT_SW_U_Update2, 0, 1000);  // Heartbeat LED
+    SCH_Add_Task(HEARTBEAT_SW_U_Update1, 0, 1000);  // Heartbeat LED
     SCH_Add_Task(UART2_BUF_O_Update,     0, 1);     // UART-USB reports    
 }

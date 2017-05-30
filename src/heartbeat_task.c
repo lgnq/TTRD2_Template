@@ -125,13 +125,12 @@ void HEARTBEAT_SW_U_Init(void)
 -*----------------------------------------------------------------------------*/
 void HEARTBEAT_SW_U_Update1(void)
 {
-#if 0    
     static uint32_t Heartbeat_state_s = 0;
     static uint32_t Countdown_s = 10;
 
-    ///UART2_BUF_O_Write_String_To_Buffer("\nCountdown : ");  
-    ///UART2_BUF_O_Write_Number03_To_Buffer(Countdown_s);  
-    ///UART2_BUF_O_Write_String_To_Buffer("\n");  
+    UART2_BUF_O_Write_String_To_Buffer("\nCountdown : ");  
+    UART2_BUF_O_Write_Number03_To_Buffer(Countdown_s);  
+    UART2_BUF_O_Write_String_To_Buffer("\n");  
 
     if (Countdown_s-- == 0)
     {
@@ -140,29 +139,31 @@ void HEARTBEAT_SW_U_Update1(void)
             ;
     }
 
-    // Only flash the LED if the switch is *not* pressed
-    if (SWITCH_BUTTON1_Get_State() == BUTTON1_NOT_PRESSED)
+    // Only flash the LED if the switch is *not* pressed    
+    ///if (SWITCH_BUTTON1_Get_State() == BUTTON1_NOT_PRESSED)
+    if (1)
     {
         // Change the LED from OFF to ON (or vice versa)
         if (Heartbeat_state_s == 1)
         {
             Heartbeat_state_s = 0;
-            GPIO_WriteLow(LED1_PORT, LED1_PIN);//输出低电平
-            ///UART2_BUF_O_Write_String_To_Buffer("LED On ...\n");  
+            //todo : turn LED on
+
+            UART2_BUF_O_Write_String_To_Buffer("LED On ...\n");  
         }
         else
         {
             Heartbeat_state_s = 1;
-            GPIO_WriteHigh(LED1_PORT, LED1_PIN);//输出高电平
-            ///UART2_BUF_O_Write_String_To_Buffer("LED Off ...\n");  
+            //todo : turn LED off
+
+            UART2_BUF_O_Write_String_To_Buffer("LED Off ...\n");  
         }
     }
     else
     {
-        ///UART2_BUF_O_Write_String_To_Buffer("SWITCH PRESSED ...\n");  
+        UART2_BUF_O_Write_String_To_Buffer("SWITCH PRESSED ...\n");  
         Countdown_s = 10;
     }
-#endif     
 }
 
 /*----------------------------------------------------------------------------*-
@@ -212,13 +213,13 @@ void HEARTBEAT_SW_U_Update2(void)
     {
         Heartbeat_state_s = 0;
 
-        //turn LED on
+        //todo : turn LED on
     }
     else
     {
         Heartbeat_state_s = 1;
 
-        //turn LED off
+        //todo : turn LED off
     }
 }
 

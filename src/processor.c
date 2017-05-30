@@ -169,9 +169,9 @@ void PROCESSOR_Configure_Reqd_MoSt(void)
         case FAIL_SAFE_S:
         {
             // Configure UART1 (set baud rate)
-            ///UART2_BUF_O_Init(230400);
-            ///UART2_BUF_O_Write_String_To_Buffer("\nFail-Safe State\n");
-            ///UART2_BUF_O_Send_All_Data();
+            UART2_BUF_O_Init(230400);
+            UART2_BUF_O_Write_String_To_Buffer("\nFail-Safe State\n");
+            UART2_BUF_O_Send_All_Data();
 
             // Reset caused by iWDT
             // Trigger "fail safe" behaviour
@@ -242,7 +242,7 @@ void PROCESSOR_Perform_Safe_Shutdown(void)
     while (1)
     {
         // Flicker Heartbeat LED to indicate fault
-        for (Delay1 = 0; Delay1 < 1000000; Delay1++) 
+        for (Delay1 = 0; Delay1 < 1000; Delay1++) 
         {
             Delay2 *= 3;
         }
