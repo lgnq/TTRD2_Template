@@ -82,25 +82,25 @@
 void WATCHDOG_Init(const uint32_t WDT_COUNT)
 {
 #if 0  
-   // Enable write access to IWDG_PR and IWDG_RLR registers
-   IWDG->KR = 0x5555;
+    // Enable write access to IWDG_PR and IWDG_RLR registers
+    IWDG->KR = 0x5555;
 
-   // Set pre-scalar to 4 (timer resolution is 125¦Ìs)
-   IWDG->PR = 0x00;
+    // Set pre-scalar to 4 (timer resolution is 125¦Ìs)
+    IWDG->PR = 0x00;
 
-   // Counts down to 0 in increments of 125¦Ìs
-   // Max reload value is 0xFFF (4095) or ~511 ms (with this prescalar)
-   IWDG->RLR = WDT_COUNT;
+    // Counts down to 0 in increments of 125¦Ìs
+    // Max reload value is 0xFFF (4095) or ~511 ms (with this prescalar)
+    IWDG->RLR = WDT_COUNT;
 
-   // Reload IWDG counter
-   IWDG->KR = 0xAAAA;
+    // Reload IWDG counter
+    IWDG->KR = 0xAAAA;
 
-   // Enable IWDG (the LSI oscillator will be enabled by hardware)
-   IWDG->KR = 0xCCCC;
+    // Enable IWDG (the LSI oscillator will be enabled by hardware)
+    IWDG->KR = 0xCCCC;
 #endif
-   
-   // Feed watchdog
-   WATCHDOG_Update();
+
+    // Feed watchdog
+    WATCHDOG_Update();
 }
 
 /*----------------------------------------------------------------------------*-
@@ -141,7 +141,7 @@ void WATCHDOG_Init(const uint32_t WDT_COUNT)
 -*----------------------------------------------------------------------------*/
 void WATCHDOG_Update(void)
 {
-   // Feed the watchdog (reload IWDG counter)
+    // Feed the watchdog (reload IWDG counter)
 }
 
 uint8_t reset_by_watchdog(void)
