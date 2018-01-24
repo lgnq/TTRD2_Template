@@ -324,7 +324,7 @@ void SCH_Dispatch_Tasks(void)
      None.
  
 -*----------------------------------------------------------------------------*/
-void SCH_Add_Task(void (* pTask)(), const uint32_t DELAY, const uint32_t PERIOD)
+void SCH_Add_Task(void (* pTask)(void), const uint32_t DELAY, const uint32_t PERIOD)
 {
     uint32_t Task_id = 0;
    

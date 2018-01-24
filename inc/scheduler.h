@@ -67,7 +67,7 @@ void SCH_Init_Milliseconds(const uint32_t TICKms);
 void SCH_Start(void);
 void SCH_Dispatch_Tasks(void);
 
-void SCH_Add_Task(void (* pTask)(),
+void SCH_Add_Task(void (* pTask)(void),
                   const uint32_t DELAY,   // Offset (Ticks)
                   const uint32_t PERIOD); // Period (Ticks)
 
